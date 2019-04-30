@@ -7,7 +7,6 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,12 +20,12 @@ class MainActivity : AppCompatActivity() {
         val task = client.startSmsRetriever()
 
         task.addOnSuccessListener {
-            Log.d("CodeActivity", "Sms listener started!")
+            Log.d("MainActivity", "Sms listener started!")
             SmsReceiver.bindListener(RetryListener(this@MainActivity) {startSmsRetriever()})
         }
 
         task.addOnFailureListener { e ->
-            Log.e("CodeActivity", "Failed to start sms retriever: ${e.message}")
+            Log.e("MainActivity", "Failed to start sms retriever: ${e.message}")
             startSmsRetriever()
         }
     }

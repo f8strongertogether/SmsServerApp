@@ -9,8 +9,12 @@ interface SmsListener {
 }
 
 class RetryListener(val context: Context, val function: () -> Unit) : SmsListener {
-    override fun onSuccess(code: String) {
-        Toast.makeText(context, code, Toast.LENGTH_SHORT).show()
+
+    val helpRequestsRepository = HelpRequestsRepository()
+
+    override fun onSuccess(content: String) {
+        Toast.makeText(context, content, Toast.LENGTH_SHORT).show()
+        helpRequestsRepository.saveMessage(content)
         //Starting the listener again so it can receive more messages
         function.invoke()
     }
@@ -19,4 +23,5 @@ class RetryListener(val context: Context, val function: () -> Unit) : SmsListene
         Toast.makeText(context, "Error retrieving message", Toast.LENGTH_SHORT).show()
         function.invoke()
     }
+
 }
